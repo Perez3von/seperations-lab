@@ -15,12 +15,11 @@ describe('03_separation-of-concerns-demo routes', () => {
     return setup(pool);
   });
 //-----------------------------------------------------------//
-  it('creates a new order in our database and sends a text message', () => {
+  it('creates a new order in our database and sends a text message', async () => {
     return request(app)
       .post('/api/v1/orders')
       .send({ quantity: 10 })
       .then(res => {
-        // expect(createMessage).toHaveBeenCalledTimes(1);
         expect(res.body).toEqual({
           id: '1',
           quantity: 10
@@ -29,9 +28,9 @@ describe('03_separation-of-concerns-demo routes', () => {
   });
   //-----------------------------------------------------------//
 
-  it('get all orders in our database and sends a text message', () => {
+  it('it gets all of the orders', async () => {
     return request(app)
-      .get('/api/v1/all')
+      .get('/api/v1/orders')
       .then(res => {
         expect(res.body).toEqual([{
           id: '1',
@@ -39,6 +38,34 @@ describe('03_separation-of-concerns-demo routes', () => {
         }]);
       });
   });
+
+
+
+
+  it('it gets order by id', async () => {
+    return request(app)
+      .get('/api/v1/orders/1')
+      .then(res => {
+        expect(res.body).toEqual([{
+          id: '1',
+          quantity: 10
+        }]);
+      });
+  });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
   //-----------------------------------------------------------//
 });
